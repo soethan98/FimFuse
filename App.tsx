@@ -34,16 +34,7 @@ import { fetchTrendingMovies } from './api/moviesdb';
 
 function App(): React.JSX.Element {
 
-  useEffect(() => {
-    // getTopRatedMovies()
-  
-    
-  }, [])
-  
-  const getTopRatedMovies=async()=>{
-   await fetchTrendingMovies()
-   
-}
+
   return (
     <AppNavigation></AppNavigation>
   )

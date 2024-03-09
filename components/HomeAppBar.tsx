@@ -15,11 +15,12 @@ export default function HomeAppBar() {
 
 const styles = StyleSheet.create({
     appBarContent: {
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
+        alignItems:'center',
         paddingHorizontal: 16,
-        paddingTop: 32
+        marginBottom:16,
+        height:75
     },
     appBarTitle: {
         fontSize: 24,
