@@ -1,0 +1,1 @@
+export const apiKey:string = "place here api key from  : https://www.themoviedb.org"
