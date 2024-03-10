@@ -4,16 +4,17 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, NavigationProp } from '@react-navigation/native'
 import Home from '../screens/Home'
 import Details from '../screens/Details'
 
 
 export type AppNavigationParamList = {
   Home:undefined,
-  Detail: {id:string}
+  Detail: {id:number}
 }
 
+export type StackNavigation = NavigationProp<AppNavigationParamList>;
 
 const Stack = createNativeStackNavigator<AppNavigationParamList>()
 

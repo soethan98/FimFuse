@@ -12,7 +12,3 @@ export interface MovieResponse {
     results: Movie[]
 }
 
-export interface ApiCallResponse<T>{
-    data?:T;
-    errorMessage?:string
-}

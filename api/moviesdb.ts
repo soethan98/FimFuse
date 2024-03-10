@@ -1,6 +1,8 @@
 import { apiKey } from "../constants/constants";
 import axios from "axios";
-import { ApiCallResponse, Movie, MovieResponse } from "../models/movie";
+import { Movie, MovieResponse } from "../models/movie";
+import { ApiCallResponse } from "../models/ApiCallResponse";
+import { Cast, CastResponse } from "../models/cast";
 
 const apiBaseUrl = 'https://api.themoviedb.org/3'
 const trendingMoviesEndpoint = `${apiBaseUrl}/trending/movie/day`
@@ -9,10 +11,14 @@ const topRatedMoviesEndpoint = `${apiBaseUrl}/movie/top_rated`
 
 
 // function to fetch url
-export const image500= (path:string):string | null => path ? `https://image.tmdb.org/t/p/w500/${path}` : null;
-export const image342= (path:string):string | null => path ? `https://image.tmdb.org/t/p/w500/${path}` : null;
-export const image185= (path:string):string | null => path ? `https://image.tmdb.org/t/p/w500/${path}` : null;
+export const image500 = (path: string): string | null => path ? `https://image.tmdb.org/t/p/w500/${path}` : null;
+export const image342 = (path: string): string | null => path ? `https://image.tmdb.org/t/p/w342/${path}` : null;
+export const image185 = (path: string): string | null => path ? `https://image.tmdb.org/t/p/w185${path}` : null;
 
+// dynamic endpoint
+const movieDetailsEndpoint = (id: number) => `${apiBaseUrl}/movie/${id}?api_key=${apiKey}`
+const movieCreditsEndpoint = (id: number) => `${apiBaseUrl}/movie/${id}/credits`
+const movieSimilarEndpoint = (id: number) => `${apiBaseUrl}/movie/${id}/similar?api_key=${apiKey}`
 
 // fallback images 
 export const fallbackMoviePoster = 'https://img.myloview.com/stickers/white-laptop-screen-with-hd-video-technology-icon-isolated-on-grey-background-abstract-circle-random-dots-vector-illustration-400-176057922.jpg';
@@ -50,7 +56,7 @@ export async function fetchTrendingMovies(): Promise<Movie[]> {
     )
 
     if (movieResponse.data) {
-        console.log(JSON.stringify(movieResponse.data.results,))
+        // console.log(JSON.stringify(movieResponse.data.results,))
         return movieResponse.data.results;
     }
 
@@ -91,5 +97,22 @@ export async function fetchTopRatedMovies(): Promise<Movie[]> {
 
     }
     return [];
+}
+
+export async function fetchMovieCredits(id: number): Promise<Cast[]> {
+    const castResponse: ApiCallResponse<CastResponse> = await apiCall<CastResponse>(
+        movieCreditsEndpoint(id)
+    )
+
+    if (castResponse.data) {
+        console.log(JSON.stringify(castResponse.data.cast,))
+        return castResponse.data.cast;
+    }
+
+    if (castResponse.errorMessage) {
+        console.log(castResponse.errorMessage)
+
+    }
+    return []
 }
 
