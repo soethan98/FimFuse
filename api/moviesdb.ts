@@ -98,7 +98,7 @@ export async function fetchTopRatedMovies(): Promise<Movie[]> {
     }
     return [];
 }
-export async function fetchSimilarMovies(id:number) {
+export async function fetchSimilarMovies(id: number): Promise<Movie[]> {
     const movieResponse: ApiCallResponse<MovieResponse> = await apiCall<MovieResponse>(
         movieSimilarEndpoint(id),
     )
@@ -114,6 +114,24 @@ export async function fetchSimilarMovies(id:number) {
     }
     return [];
 }
+
+export async function fetchMovieDetails(id: number): Promise<Movie | null> {
+    const movieResponse: ApiCallResponse<Movie> = await apiCall<Movie>(
+        movieDetailsEndpoint(id),
+    )
+
+    if (movieResponse.data) {
+        console.log(JSON.stringify(movieResponse.data,))
+        return movieResponse.data;
+    }
+
+    if (movieResponse.errorMessage) {
+        console.log(movieResponse.errorMessage)
+
+    }
+    return null;
+}
+
 export async function fetchMovieCredits(id: number): Promise<Cast[]> {
     const castResponse: ApiCallResponse<CastResponse> = await apiCall<CastResponse>(
         movieCreditsEndpoint(id)

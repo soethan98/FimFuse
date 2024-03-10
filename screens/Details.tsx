@@ -5,11 +5,12 @@ import React, { useEffect, useState } from 'react'
 import { AppNavigationParamList } from '../navigation/AppNavigation';
 import COLORS from '../theme/theme';
 import { Cast } from '../models/cast';
-import { fetchMovieCredits, fetchSimilarMovies, fetchTopRatedMovies } from '../api/moviesdb';
+import { fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, fetchTopRatedMovies } from '../api/moviesdb';
 import CastList from '../components/cast/CastList';
 import Loading from '../components/Loading';
 import { Movie } from '../models/movie';
 import MovieList from '../components/MovieList';
+import MovieDetailSection from '../components/detail/MovieDetailSection';
 
 
 type DetailsProps = NativeStackScreenProps<AppNavigationParamList, 'Detail'>
@@ -20,6 +21,7 @@ export default function Details({ route, navigation }: DetailsProps) {
   const [loading, setLoading] = useState(true)
   const [cast, setCast] = useState<Cast[]>([])
   const [similarMovies, setSimilarMovies] = useState<Movie[]>([])
+  const [movie, setMovie] = useState<Movie>()
 
   const getCast = async () => {
     const data = await fetchMovieCredits(movieId)
@@ -34,13 +36,25 @@ export default function Details({ route, navigation }: DetailsProps) {
     setLoading(false)
   }
 
+  const getMovieDetails =async () => {
+    const data = await fetchMovieDetails(movieId)
+    if (data) setMovie(data)
+    setLoading(false)
+  }
+
   useEffect(() => {
-    getSimilarMovies()
+    getMovieDetails()
   }, [])
   return (
     <View style={styles.mainView}>
+      {
+        movie && (
+          <MovieDetailSection movie={movie}/>
+        )
+      }
+      {/* <movie &&  /> */}
 
-      {similarMovies.length > 0 && <MovieList data={similarMovies} title='Similar Movies'/>}
+      {/* {similarMovies.length > 0 && <MovieList data={similarMovies} title='Similar Movies'/>} */}
 
     </View>
   )
