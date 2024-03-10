@@ -56,7 +56,7 @@ export async function fetchTrendingMovies(): Promise<Movie[]> {
     )
 
     if (movieResponse.data) {
-        // console.log(JSON.stringify(movieResponse.data.results,))
+        console.log(JSON.stringify(movieResponse.data.results,))
         return movieResponse.data.results;
     }
 
@@ -98,7 +98,22 @@ export async function fetchTopRatedMovies(): Promise<Movie[]> {
     }
     return [];
 }
+export async function fetchSimilarMovies(id:number) {
+    const movieResponse: ApiCallResponse<MovieResponse> = await apiCall<MovieResponse>(
+        movieSimilarEndpoint(id),
+    )
 
+    if (movieResponse.data) {
+        console.log(JSON.stringify(movieResponse.data.results,))
+        return movieResponse.data.results;
+    }
+
+    if (movieResponse.errorMessage) {
+        console.log(movieResponse.errorMessage)
+
+    }
+    return [];
+}
 export async function fetchMovieCredits(id: number): Promise<Cast[]> {
     const castResponse: ApiCallResponse<CastResponse> = await apiCall<CastResponse>(
         movieCreditsEndpoint(id)

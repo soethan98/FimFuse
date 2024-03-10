@@ -10,22 +10,21 @@ export type CastProp = {
 }
 
 export default function CastItem({ cast, onItemClick }: CastProp) {
-    console.log(`hello --- ${cast.profile_path}`)
     return (
         <TouchableOpacity onPress={onItemClick}>
-            
-                <View style={styles.container}>
+
+            <View style={styles.container}>
                 <Image style={styles.profileImage} source={{ uri: image185(cast?.profile_path) || fallbackPersonImage }} />
 
-                    <Text style={[styles.text, styles.characterText]}>{cast?.character.length > 10 ? `${cast?.character.slice(0, 10)}...` : cast?.
-                        character}</Text>
-                    <Text style={[styles.text, styles.nameText]}>
-                        {
-                            cast?.original_name.length > 10 ? `${cast?.original_name.slice(0, 10)}...` : cast?.original_name
-                        }
-                    </Text>
-                </View>
-            
+                <Text style={[styles.text, styles.characterText]}>{cast?.character.length > 10 ? `${cast?.character.slice(0, 10)}...` : cast?.
+                    character}</Text>
+                <Text style={[styles.text, styles.nameText]}>
+                    {
+                        cast?.original_name.length > 10 ? `${cast?.original_name.slice(0, 10)}...` : cast?.original_name
+                    }
+                </Text>
+            </View>
+
         </TouchableOpacity>
     )
 }
@@ -35,12 +34,12 @@ const styles = StyleSheet.create({
         width: 96,
         height: 96,
         borderRadius: 48,
-        resizeMode:'cover'
+        resizeMode: 'cover'
     },
     container: {
         flexDirection: 'column',
         alignItems: 'center',
-        marginRight:8,
+        marginRight: 8,
     },
     text: {
         fontSize: 12
@@ -50,6 +49,6 @@ const styles = StyleSheet.create({
     },
     nameText: {
         color: '#d4d4d4',
-        marginTop:2
+        marginTop: 2
     }
 })
