@@ -20,8 +20,8 @@ export default function Home() {
 
   useEffect(() => {
     getTrendingMovies()
-    // getUpcomingMovies()
-    // getTopRatedMovies()
+    getUpcomingMovies()
+    getTopRatedMovies()
   }, [])
 
   const getTrendingMovies = async () => {

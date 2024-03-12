@@ -23,9 +23,9 @@ const styles = StyleSheet.create({
     label: {
         color: '#fff',
         fontSize: 18,
-        marginBottom:8
+        marginBottom: 8
     },
-    mainContainer:{
-        marginHorizontal:16
+    mainContainer: {
+        marginHorizontal: 16, marginTop: 16
     }
 })

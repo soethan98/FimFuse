@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Movie } from '../../models/movie'
 
 
+
+const {width,height} = Dimensions.get('window')
 type MovieDetailSectionProps = {
     movie: Movie
 }
@@ -54,11 +56,17 @@ const styles = StyleSheet.create({
         color: '#a3a3a3'
     },
     mainContainer:{
-        marginHorizontal:16
+        marginHorizontal:16,
+        marginTop:-120
+        
     },
     genres:{
         flexDirection:'row',
         justifyContent:'center'
     },
+
+    detailInfo:{
+
+    }
 
 })

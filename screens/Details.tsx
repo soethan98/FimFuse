@@ -1,6 +1,6 @@
 
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { AppNavigationParamList } from '../navigation/AppNavigation';
 import COLORS from '../theme/theme';
@@ -11,6 +11,8 @@ import Loading from '../components/Loading';
 import { Movie } from '../models/movie';
 import MovieList from '../components/MovieList';
 import MovieDetailSection from '../components/detail/MovieDetailSection';
+import MovieDetailBackdrop from '../components/detail/MovieDetailBackdrop';
+import DetailTopBar from '../components/detail/DetailTopBar';
 
 
 type DetailsProps = NativeStackScreenProps<AppNavigationParamList, 'Detail'>
@@ -30,13 +32,13 @@ export default function Details({ route, navigation }: DetailsProps) {
 
   }
 
-  const getSimilarMovies =async () => {
+  const getSimilarMovies = async () => {
     const data = await fetchSimilarMovies(movieId)
     if (data) setSimilarMovies(data)
     setLoading(false)
   }
 
-  const getMovieDetails =async () => {
+  const getMovieDetails = async () => {
     const data = await fetchMovieDetails(movieId)
     if (data) setMovie(data)
     setLoading(false)
@@ -44,19 +46,39 @@ export default function Details({ route, navigation }: DetailsProps) {
 
   useEffect(() => {
     getMovieDetails()
+    getCast()
+    getSimilarMovies()
   }, [])
   return (
-    <View style={styles.mainView}>
+    <ScrollView style={styles.mainView}>
       {
-        movie && (
-          <MovieDetailSection movie={movie}/>
+        loading ? <Loading /> : ( 
+          movie ? 
+          <>
+          <DetailTopBar onNavigateBack={() => {
+            navigation.goBack()
+          }}/>
+            <MovieDetailBackdrop posterPath={movie!.poster_path} />
+            <MovieDetailSection movie={movie!}  />
+
+            
+          </>
+: null
         )
+        // movie && (
+        // )
       }
-      {/* <movie &&  /> */}
+      {/* {movie && (<MovieDetailSection movie={movie!} />)} */}
 
-      {/* {similarMovies.length > 0 && <MovieList data={similarMovies} title='Similar Movies'/>} */}
+      {cast.length > 0 && <CastList casts={cast} />}
 
-    </View>
+      {similarMovies.length > 0 &&  <View style={styles.similarContent}>
+        <MovieList data={similarMovies} title='Similar Movies'/>
+      </View>
+      
+      }
+
+    </ScrollView>
   )
 }
 
@@ -64,5 +86,9 @@ const styles = StyleSheet.create({
   mainView: {
     flex: 1,
     backgroundColor: COLORS.background,
+  },
+  similarContent:{
+    marginTop:16
   }
+  
 })
